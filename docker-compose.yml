@@ -1,0 +1,35 @@
+version: '3'
+services:
+  app:
+    privileged: yes
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - RAILS_ENV=development
+      - SECRET_KEY_BASE=production_test_key
+    volumes:
+      - .:/builder-hub
+    ports:
+      - "80:80"
+    depends_on:
+      - pg
+      - redis
+  pg:
+    image: postgres:14.1
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=builder_hub
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./docker/builder-hub-pg/data:/var/lib/postgresql/data
+    command: ["-c", "max_connections=500"]
+  redis:
+    image: redis:5.0.4
+    volumes:
+      - ./docker/builder-hub-redis/data:/data
+    ports:
+      - "6380:6379"

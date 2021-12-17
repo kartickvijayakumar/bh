@@ -1,0 +1,21 @@
+.defaults: &defaults
+  from_email: builderhub@hypto.in
+  ui_auth: MW43GIAesemtloegB93vMyQpSFS9SXav
+  ui_google_client_id: 1015098649965-rgl9rg0fj8etuakj5dbesa5uoa9kfdr3.apps.googleusercontent.com
+  ui_google_client_secret: BOJhE6E9eiqw2bziTWb9FAwC
+
+development:
+  <<: *defaults
+  ui_subdomain: builderhub-dev
+  ui_endpoint: http://builderhub-dev.hypto.com
+  ui_github_client_id: 6c5dc2f6d82aaba5ecea
+  ui_github_client_secret: b26c53f60f762d9b651868fc4b764acb7dca5b46
+
+production:
+  <<: *defaults
+  ui_subdomain: builderhub
+  ui_endpoint: https://builderhub.hypto.com
+  ui_github_client_id: 5a22f15174e545fbe26c
+  ui_github_client_secret: 63f5d3f6e590fae7dcb16b5b0b3121fa59ce5ca2
+
+

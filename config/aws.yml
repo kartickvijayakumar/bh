@@ -1,0 +1,11 @@
+access_key: AKIAJN2U2KT5ENL6OIJA
+secret_key: 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
+region: ap-south-1
+
+asset_bucket: assets.partners-dev.hypto.co.in
+
+smtp_address: email-smtp.ap-south-1.amazonaws.com
+smtp_username: AKIAVXNBGJXSZIP2ZONT
+smtp_password: BAI05W3n+ro8JyxRduK5WuD0xYWHphh+k8jFKc7YeA6b
+
+ui_cdn_bucket: webapp.partners.hypto.co.in

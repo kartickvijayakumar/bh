@@ -1,0 +1,183 @@
+<div class="d-flex mt-4 w-100">
+  <div class="card text-center w-100 me-4 mb-4">
+    <h5 class="card-header">Welcome to Hypto BuilderHub</h5>
+    <div class="card-body">
+      <% if Hub.current.github_user_name.present? %>
+        <p>Connected to Github (<strong><%= Hub.current.github_user_name %></strong>)
+          <%= link_to 'Revoke', revoke_github_ui_service_index_path, method: :delete, class: 'link-danger' %></p>
+      <% else %>
+        <p class="card-text">Explore our BuilderHub features by connecting to your GitHub account...</p>
+        <%= link_to image_tag('github-signin-button.png', class: 'btn-google-signin', width: 200), ui_github_login_path %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% if Hub.current.github_user_name.present? %>
+<div class="d-flex mt-4 w-100">
+  <div class="card w-100 me-4 mb-4">
+    <div class="card-header text-center">
+      Your Dashboard
+    </div>
+    <% if @services.size <= 0 %>
+      <div class="card-body text-center">
+        <p class="card-text">Your dashboard is empty. Create/Import a service or app from GitHub </p>
+      </div>
+    <% else %>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">
+              #
+            </th>
+            <th scope="col">
+              Id
+            </th>
+            <th scope="col">
+              Name
+            </th>
+            <th scope="col">
+              Status
+            </th>
+            <th scope="col">
+              Endpoint
+            </th>
+            <th scope="col">
+              Endpoint Status
+            </th>
+            <!--          <th scope="col">-->
+            <%#=Service::KEYS.keys[0]%>
+            <!--          </th>-->
+            <!--          <th scope="col">-->
+            <%#=Service::KEYS.keys[1]%>
+            <!--          </th>-->
+            <!--          <th scope="col">-->
+            <%#=Service::KEYS.keys[2]%>
+            <!--          </th>-->
+            <!--          <th scope="col">-->
+            <%#=Service::KEYS.keys[3]%>
+            <!--          </th>-->
+            <!--          <th scope="col">-->
+            <%#=Service::KEYS.keys[4]%>
+            <!--          </th>-->
+            <th scope="col">
+
+            </th>
+            <th scope="col">
+
+            </th>
+            <th scope="col">
+
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <%@services.each_with_index do |service, index| %>
+            <tr>
+              <th scope="row">
+                <%=index+1%>
+              </th>
+              <td>
+                <%=service.id%>
+              </td>
+              <td>
+                <%="#{service.name}Service"%>
+              </td>
+              <td>
+                <%=Service::STATUSES.key(service.status)%>
+              </td>
+              <td>
+                <a href="<%="https://#{service.name.underscore.dasherize}.hypto.com"%>">
+                <%="https://#{service.name.underscore.dasherize}.hypto.com"%>
+                </a>
+              </td>
+              <td>
+                Not Active
+              </td>
+              <!--            <td>-->
+              <%#=Service::PROTOCOLS.key(service.protocol)%>
+              <!--            </td>-->
+              <!--            <td>-->
+              <%#=Service::SERVER_PROG_LANGUAGES.key(service.server_prog_language)%>
+              <!--            </td>-->
+              <!--            <td>-->
+              <%#=Service::CLOUD_PROVIDERS.key(service.cloud_provider)%>
+              <!--            </td>-->
+              <!--            <td>-->
+              <%#=Service::SERVER_INFRASTRUCTURES.key(service.server_infrastructure)%>
+              <!--            </td>-->
+              <!--            <td>-->
+              <%#=Service::DEPLOYMENT_INFRASTRUCTURES.key(service.deployment_infrastructure)%>
+              <!--            </td>-->
+              <td>
+                <% if service.can_deploy? %>
+                  <%= link_to 'Deploy', deploy_ui_service_index_path(id: service.id), class: 'btn btn-primary', method: :post%>
+                <% else %>
+                  <%= button_tag 'Deploy', class: 'btn btn-outline-primary', disabled: true %>
+                <% end %>
+              </td>
+              <td>
+                <% if service.can_destroy? %>
+                  <%= link_to 'Destroy', destroy_service_ui_service_index_path(id: service.id), class: 'btn btn-primary', method: :post%>
+                <% else %>
+                  <%= button_tag 'Destroy', class: 'btn btn-outline-primary', disabled: true %>
+                <% end %>
+              </td>
+              <td>
+                <% if service.can_delete? %>
+                  <%= link_to 'Delete', ui_service_path(id: service.id), class: 'btn btn-primary', method: :delete %>
+                <% else %>
+                  <%= button_tag 'Delete', class: 'btn btn-outline-primary', disabled: true %>
+                <% end %>
+              </td>
+            </tr>
+          <%end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="d-flex mt-4 w-100">
+  <div class="card w-25 me-4 mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Create</h5>
+      <p class="card-text">Use our templates to create your copy of a working service or app in your GitHub account.</p>
+      <% if Hub.current.github_user_name.present? %>
+        <%= link_to 'Explore', ui_service_index_path, class: 'btn btn-primary' %>
+      <% else %>
+        <%= button_tag 'Explore', class: 'btn btn-outline-primary', disabled: true %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card w-25 me-4 mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Import</h5>
+      <p class="card-text">Import an existing service or app from your GitHub account and deploy it on the cloud.</p>
+      <% if Hub.current.github_user_name.present? %>
+        <%= link_to 'Explore', ui_import_path, class: 'btn btn-primary' %>
+      <% else %>
+        <%= button_tag 'Explore', class: 'btn btn-outline-primary', disabled: true %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card w-25 me-4 mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Attach</h5>
+      <p class="card-text">Attach financial primitives (store, ledger, asset etc.) to your service or app and explore them.</p>
+      <%= button_tag 'Coming soon', class: 'btn btn-outline-primary', disabled: true %>
+    </div>
+  </div>
+
+  <div class="card w-25 me-4 mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Orchestrate</h5>
+      <p class="card-text">Orchestrate patterns using financial primitives and deploy them onto your service or app.</p>
+      <%= button_tag 'Coming soon', class: 'btn btn-outline-primary', disabled: true %>
+    </div>
+  </div>
+</div>
+<% end %>

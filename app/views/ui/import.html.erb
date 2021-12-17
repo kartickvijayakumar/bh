@@ -1,0 +1,99 @@
+<div class="d-flex mt-4 w-100">
+  <div class="card text-center w-100 me-4 mb-4">
+    <h5 class="card-header">Welcome to Hypto BuilderHub</h5>
+    <div class="card-body">
+      <% if Hub.current.github_user_name.present? %>
+        <p>Connected to Github (<strong><%= Hub.current.github_user_name %></strong>)
+          <%= link_to 'Revoke', revoke_github_ui_service_index_path, method: :delete, class: 'link-danger' %></p>
+      <% else %>
+        <p class="card-text">Explore our BuilderHub features by connecting to your GitHub account...</p>
+        <%= link_to image_tag('github-signin-button.png', class: 'btn-google-signin', width: 200), ui_github_login_path %>
+      <% end %>
+      <%= link_to 'Back To Dashboard', ui_home_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<div class="d-flex mt-4 w-100">
+  <div class="card w-100 me-4 mb-4">
+    <div class="card-header text-center">
+      GitHub Repositories that you have access to
+    </div>
+    <% if @repos.size <= 0 %>
+      <div class="card-body text-center">
+        <p>You have no repositories. Go back to your Dashboard & create a service or app using our BuilderHub</p>
+      </div>
+    <% else %>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">
+              #
+            </th>
+            <th scope="col">
+              Repo Id
+            </th>
+            <th scope="col">
+              Repo Name
+            </th>
+            <th scope="col">
+              Repo Owner
+            </th>
+            <th scope="col">
+              Default Branch
+            </th>
+            <th scope="col">
+              Private
+            </th>
+            <th scope="col">
+              Fork
+            </th>
+            <th scope="col">
+
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <%@repos.each_with_index do |repo, index| %>
+            <tr>
+              <th scope="row">
+                <%=index+1%>
+              </th>
+              <td>
+                <%=repo.id%>
+              </td>
+              <td>
+                <a href="<%= repo.html_url %>">
+                  <%= repo.name %>
+                </a>
+              </td>
+              <td>
+                <a href="<%= repo.owner.html_url %>">
+                  <%= repo.owner.login %>
+                </a>
+              </td>
+              <td>
+                <%=repo.default_branch%>
+              </td>
+              <td>
+                <%=repo.private%>
+              </td>
+              <td>
+                <%=repo.fork%>
+              </td>
+              <td>
+                <% if true %>
+                  <%= link_to 'Import', import_service_ui_service_index_path(owner: repo.owner.login, name: repo.name), class: 'btn btn-primary', method: :post %>
+                <% else %>
+                  <%= button_tag 'Import', class: 'btn btn-outline-primary', disabled: true %>
+                <% end %>
+              </td>
+            </tr>
+          <%end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>
