@@ -1,9 +1,9 @@
 development:
   host: redis
   port: 6379
-  namespace: builder-hub-redis
+  namespace: bh-redis
 
 production:
   host: redis
   port: 6379
-  namespace: builder-hub-redis
+  namespace: bh-redis

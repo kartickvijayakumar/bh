@@ -2,6 +2,6 @@ verbose: false
 concurrency: 10
 timeout: 180
 average_scheduled_poll_interval: 2 # Change it 1 if required in future
-subdomain: builder-hub-admin
+subdomain: bh-admin
 username: admin
 password: password

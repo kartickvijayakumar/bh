@@ -2,8 +2,7 @@
 
 set -vx
 
-#bundle install
-
+bundle install
 bundle exec rake db:migrate
 
 rm -f tmp/pids/server.pid

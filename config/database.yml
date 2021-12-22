@@ -2,7 +2,7 @@ development:
   host: pg
   adapter: postgresql
   encoding: unicode
-  database: builder_hub
+  database: bh
   pool: 10
   username: root
   password: password
@@ -11,7 +11,7 @@ production:
   host: pg
   adapter: postgresql
   encoding: unicode
-  database: builder_hub
+  database: bh
   pool: 10
   username: root
   password: password

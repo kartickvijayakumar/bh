@@ -9,7 +9,7 @@ services:
       - RAILS_ENV=development
       - SECRET_KEY_BASE=production_test_key
     volumes:
-      - .:/builder-hub
+      - .:/buH
     ports:
       - "80:80"
     depends_on:
@@ -22,14 +22,14 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=builder_hub
+      - POSTGRES_DB=bh
       - TZ=Asia/Kolkata
     volumes:
-      - ./docker/builder-hub-pg/data:/var/lib/postgresql/data
+      - ./docker/bh/data:/var/lib/postgresql/data
     command: ["-c", "max_connections=500"]
   redis:
     image: redis:5.0.4
     volumes:
-      - ./docker/builder-hub-redis/data:/data
+      - ./docker/bh/data:/data
     ports:
       - "6380:6379"
